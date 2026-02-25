@@ -14,11 +14,12 @@ public class CreateTest{
     @Test
     public void createTest() {
 
-
+        String key = System.getenv("API_KEY");
+        String token = System.getenv("TOKEN");
         //Board ekleme
         String boardId = given()
-                .queryParam("key", "")
-                .queryParam("token", "")
+                .queryParam("key",key)
+                .queryParam("token", token)
                 .queryParam("name", "DenemeBoard2")
                 .when()
                 .post("https://api.trello.com/1/boards/")
