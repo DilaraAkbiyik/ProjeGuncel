@@ -1,7 +1,3 @@
-package webOtomasyon;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -11,59 +7,65 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import java.io.*;
 
 
-public class WebTest extends webOtomasyon.BaseTest {
+public class WebTest extends BaseTest {
 
     @Test
     public void loginTest() throws IOException {
+
         //Navigate
         driver.get("https://www.zara.com/tr/");
+        waitSecond(3);
 
-        WebElement acceptCookies = wait.until(ExpectedConditions.elementToBeClickable(By.id("onetrust-accept-btn-handler")));
+        WebElement acceptCookies = waitElement(By.id("onetrust-accept-btn-handler"));
         acceptCookies.click();
 
-        WebElement loginPageButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@class= 'layout-actionable layout-desktop-account-action layout-header-desktop-action-account link']")));
+        WebElement loginPageButton = waitElement(By.xpath("//a[@class= 'layout-actionable layout-desktop-account-action layout-header-desktop-action-account link']"));
         loginPageButton.click();
-
         System.out.println("Giriş sayfası açıldı");
+        waitSecond(2);
 
         //login
-
-        WebElement emailTextbox = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@type='email']")));
+        WebElement emailTextbox = waitElement(By.xpath("//input[@type='email']"));
         emailTextbox.click();
         emailTextbox.sendKeys("dilaraakbiyik3@gmail.com");
+        waitSecond(2);
 
-        WebElement continueButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Devam et']")));
+        WebElement continueButton = waitElement(By.xpath("//button[text()='Devam et']"));
         continueButton.click();
+        waitSecond(2);
 
-        WebElement loginWithPassword = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@aria-label='Parola ile giriş yap']")));
+        WebElement loginWithPassword = waitElement(By.xpath("//a[@aria-label='Parola ile giriş yap']"));
         loginWithPassword.click();
+        waitSecond(2);
 
-        WebElement passwordText = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@name='password']")));
+        WebElement passwordText = waitElement(By.xpath("//input[@name='password']"));
         passwordText.click();
         passwordText.sendKeys("");
 
-        WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Oturum aç']")));
+        WebElement loginButton = waitElement(By.xpath("//button[text()='Oturum aç']"));
         loginButton.click();
         System.out.println("Kullanıcı ile giriş yapıldı");
+        waitSecond(2);
 
         //Menu
-        WebElement menuIcon = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@aria-label='Menüyü aç']/div")));
+        WebElement menuIcon = waitElement(By.xpath("//button[@aria-label='Menüyü aç']/div"));
         menuIcon.click();
+        waitSecond(1);
 
-        WebElement maleCategory = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@aria-label='Kategoriler']//span[text()='ERKEK']")));
+        WebElement maleCategory = waitElement(By.xpath("//div[@aria-label='Kategoriler']//span[text()='ERKEK']"));
         maleCategory.click();
+        waitSecond(2);
 
-        WebElement allProducts = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='TÜMÜNÜ GÖR']")));
+        WebElement allProducts = waitElement(By.xpath("//span[text()='TÜMÜNÜ GÖR']"));
         allProducts.click();
         System.out.println("Tüm ürünler listelendi");
+        waitSecond(2);
 
         //Product search
-        //File path
-        String excelPath = System.getProperty("user.home") + "/Desktop/ornekExcel.xlsx";
+        String excelPath = "/Users/dilaraakbiyik/Desktop/ornekExcel.xlsx";
         FileInputStream excelFile = new FileInputStream(excelPath);
 
         Workbook workbook = new XSSFWorkbook(excelFile);
@@ -75,32 +77,37 @@ public class WebTest extends webOtomasyon.BaseTest {
         workbook.close();
         excelFile.close();
 
-        WebElement searchButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@data-qa-id='header-search-text-link']")));
+        WebElement searchButton = waitElement(By.xpath("//a[@data-qa-id='header-search-text-link']"));
         searchButton.click();
+        waitSecond(1);
 
         //First data
-        WebElement searchButtonEnter = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@id='search-home-form-combo-input']")));
+        WebElement searchButtonEnter = waitElement(By.xpath("//input[@id='search-home-form-combo-input']"));
         searchButtonEnter.click();
         searchButtonEnter.sendKeys(firstValue);
         searchButtonEnter.clear();
+        waitSecond(1);
 
         //Second data
         searchButtonEnter.click();
         searchButtonEnter.sendKeys(secondValue);
         searchButtonEnter.sendKeys(Keys.ENTER);
+        waitSecond(2);
 
-        WebElement firstProduct = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//ul[@class='product-grid__product-list']/li[1]//a[@class='product-link product-grid-product__link link']")));
+        WebElement firstProduct = waitElement(By.xpath("//ul[@class='product-grid__product-list']/li[1]//a[@class='product-link product-grid-product__link link']"));
         firstProduct.click();
+        waitSecond(2);
 
         //Get product info
-        WebElement productInfo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h1[@data-qa-qualifier='product-detail-info-name']")));
+        WebElement productInfo = waitElement(By.xpath("//h1[@data-qa-qualifier='product-detail-info-name']"));
         String productI = productInfo.getText();
 
-        WebElement productAmount = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='money-amount__main']")));
+        WebElement productAmount = waitElement(By.xpath("//span[@class='money-amount__main']"));
         String productA = productAmount.getText();
 
         //Add txt
         String txtPath = System.getProperty("user.dir") + "/productInfo.txt";
+        waitSecond(1);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(txtPath, true))) {
             if (!(productI.isEmpty())){
@@ -108,7 +115,7 @@ public class WebTest extends webOtomasyon.BaseTest {
                 writer.newLine();
                 System.out.println("Ürün bilgisi yazıldı: " + txtPath);
                 if (!(productA.isEmpty())){
-                    writer.write(productI);
+                    writer.write(productA);
                     writer.newLine();
                     System.out.println("Tutar bilgisi yazıldı: " + txtPath);
                 }else {
@@ -122,22 +129,27 @@ public class WebTest extends webOtomasyon.BaseTest {
         }
 
         //add to cart
-        WebElement addToCart = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@data-qa-action='add-to-cart']")));
+        WebElement addToCart = waitElement(By.xpath("//button[@data-qa-action='add-to-cart']"));
         addToCart.click();
+        waitSecond(1);
 
         //size
-        WebElement productSize = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//ul[@class='size-selector-sizes']//div[text()='S (US S)']")));
+        WebElement productSize = waitElement(By.xpath("//ul[@class='size-selector-sizes']//div[text()='S (US S)']"));
         productSize.click();
-        WebElement popUpMessageNo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Hayır, teşekkürler']")));
+        WebElement popUpMessageNo = waitElement(By.xpath("//button[text()='Hayır, teşekkürler']"));
         popUpMessageNo.click();
-
-        WebElement seeCart = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Alışveriş sepetini gör']")));
-        seeCart.click();
         System.out.println("Ürün sepete eklendi");
 
-        WebElement priceCart = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='shop-cart-item-pricing__current']//span[@class='money-amount__main']")));
+        //See cart
+        WebElement seeCart = waitElement(By.xpath("//span[text()='Alışveriş sepetini gör']"));
+        seeCart.click();
+        waitSecond(5);
+
+        //Price
+        WebElement priceCart = waitElement(By.xpath("//div[@class='shop-cart-item-pricing__current']//span[@class='money-amount__main']"));
         String priceInfo = priceCart.getText();
         System.out.println("Ürün tutarı görüldü");
+        waitSecond(1);
 
         if (priceInfo.equals(productA)){
             System.out.println("Ürün tutarı ile sepetteki tutar eşleşti");
@@ -146,28 +158,31 @@ public class WebTest extends webOtomasyon.BaseTest {
         }
 
         //Add second product
-        WebElement secondProduct = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='shop-cart-item-image']//img']")));
+        WebElement secondProduct = waitElement(By.xpath("//div[@class='shop-cart-item-image']//img']"));
         secondProduct.click();
         addToCart.click();
         productSize.click();
+        waitSecond(3);
         seeCart.click();
         System.out.println("İkinci ürün sepete eklendi");
 
-        WebElement productCount = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='shop-cart-item-quantity__container']//input")));
+        WebElement productCount = waitElement(By.xpath("//div[@class='shop-cart-item-quantity__container']//input"));
         String productC = productCount.getAttribute("value");
 
-        if (productC.equals(2)){
-            System.out.println("Ürün sayısı dıoğrulandı");
-        }else{
-            Assert.fail("Ürün sayısı doğrulanamadı");
+        if (productC != null && productC.equals("2")) {
+            System.out.println("Ürün sayısı doğrulandı");
+        }else {
+            Assert.fail("Ürün sayısı doğrulanmadı");
         }
 
         //Delete
-        WebElement deleteProductCart = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Sil']")));
+        WebElement deleteProductCart = waitElement(By.xpath("//span[text()='Sil']"));
         deleteProductCart.click();
+        waitSecond(1);
 
-        WebElement cartMessage = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='zds-empty-state__title']")));
+        WebElement cartMessage = waitElement(By.xpath("//div[@class='zds-empty-state__title']"));
         String message = cartMessage.getText();
+        waitSecond(1);
 
         if (message.equals("SEPETİNİZ BOŞ")){
             System.out.println("Sepette ürün mevcut değil");
